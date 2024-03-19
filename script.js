@@ -44,8 +44,8 @@ window.onload = function () {
 
   // Controls for mobile
   if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-    const buttonSize = 40; // Size of each control button
-    const spacing = 20; // Spacing between control buttons
+    const buttonSize = 80; // Size of each control button
+    const spacing = 40; // Spacing between control buttons
 
     // Calculate positions of control buttons
     const centerX = canvas.width / 2;
@@ -76,8 +76,8 @@ function createControlButton(x, y, text) {
   button.style.position = "absolute";
   button.style.left = x + "px";
   button.style.top = y + "px";
-  button.style.width = "40px"; // Adjust button size as needed
-  button.style.height = "40px";
+  button.style.width = "60px"; // Adjust button size as needed
+  button.style.height = "60px";
   button.onclick = function () {
     handleButtonClick(text);
   };
