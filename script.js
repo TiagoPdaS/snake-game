@@ -16,10 +16,10 @@ window.onload = function () {
   //game function call every 100 milliseconds
   setInterval(jogo, 100);
 
-  // Controls for desktop
+  //controlls for desktop
   document.addEventListener("keydown", function (e) {
     switch (e.keyCode) {
-      // right arrow 39
+      //right arrow 39
       case 39:
         velocityX = 1;
         velocityY = 0;
@@ -29,12 +29,12 @@ window.onload = function () {
         velocityX = -1;
         velocityY = 0;
         break;
-      // up arrow 38
+      //up arrow 38
       case 38:
         velocityX = 0;
         velocityY = -1;
         break;
-      // down arrow 40
+      //arrow down 40
       case 40:
         velocityX = 0;
         velocityY = 1;
@@ -42,69 +42,49 @@ window.onload = function () {
     }
   });
 
-  // Controls for mobile
-  if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-    const buttonSize = 80; // Size of each control button
-    const spacing = 40; // Spacing between control buttons
+  //controlls for mobile
+  canvas.addEventListener("touchmove", handleTouchMove, false);
 
-    // Calculate positions of control buttons
+  function handleTouchMove(evt) {
+    evt.preventDefault();
+    const touchX = evt.touches[0].clientX;
+    const touchY = evt.touches[0].clientY;
+
+    const canvasRect = canvas.getBoundingClientRect();
+    const canvasX = touchX - canvasRect.left;
+    const canvasY = touchY - canvasRect.top;
+
     const centerX = canvas.width / 2;
     const centerY = canvas.height / 2;
-    const leftX = centerX - buttonSize - spacing;
-    const rightX = centerX + spacing;
-    const upY = centerY - buttonSize - spacing;
-    const downY = centerY + spacing;
 
-    // Create control buttons
-    const upButton = createControlButton(leftX + buttonSize, upY, "▲");
-    const downButton = createControlButton(leftX + buttonSize, downY, "▼");
-    const leftButton = createControlButton(leftX, centerY, "◄");
-    const rightButton = createControlButton(rightX, centerY, "►");
+    const diffX = canvasX - centerX;
+    const diffY = canvasY - centerY;
 
-    // Add buttons to the document
-    document.body.appendChild(upButton);
-    document.body.appendChild(downButton);
-    document.body.appendChild(leftButton);
-    document.body.appendChild(rightButton);
+    if (Math.abs(diffX) > Math.abs(diffY)) {
+      // horizontal movement
+      if (diffX > 0) {
+        // right
+        velocityX = 1;
+        velocityY = 0;
+      } else {
+        // left
+        velocityX = -1;
+        velocityY = 0;
+      }
+    } else {
+      // vertical movement
+      if (diffY > 0) {
+        // down
+        velocityX = 0;
+        velocityY = 1;
+      } else {
+        // up
+        velocityX = 0;
+        velocityY = -1;
+      }
+    }
   }
 };
-
-// Function to create a control button
-function createControlButton(x, y, text) {
-  const button = document.createElement("button");
-  button.textContent = text;
-  button.style.position = "absolute";
-  button.style.left = x + "px";
-  button.style.top = y + "px";
-  button.style.width = "60px"; // Adjust button size as needed
-  button.style.height = "60px";
-  button.onclick = function () {
-    handleButtonClick(text);
-  };
-  return button;
-}
-
-// Function to handle button click events
-function handleButtonClick(direction) {
-  switch (direction) {
-    case "▲":
-      velocityX = 0;
-      velocityY = -1;
-      break;
-    case "▼":
-      velocityX = 0;
-      velocityY = 1;
-      break;
-    case "◄":
-      velocityX = -1;
-      velocityY = 0;
-      break;
-    case "►":
-      velocityX = 1;
-      velocityY = 0;
-      break;
-  }
-}
 
 function jogo() {
   // Resets the snake's size and score when starting the match
@@ -171,7 +151,7 @@ function jogo() {
     foodY = Math.floor(Math.random() * grid);
   }
 
-  // Display the score on the screen
+  // Exibe a pontuação na tela
   ctx.fillStyle = "#fff";
   ctx.font = "20px Arial";
   ctx.fillText("Points: " + score, 10, 30);
