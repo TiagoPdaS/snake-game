@@ -11,10 +11,10 @@ window.onload = function () {
   velocityY = 0;
   grid = 20;
   size = 3;
- //game function call every 100 milliseconds
+  //game function call every 100 milliseconds
   setInterval(jogo, 100);
 
-  //controlls
+  //controles para desktop
   document.addEventListener("keydown", function (e) {
     switch (e.keyCode) {
       //right arrow 39
@@ -27,22 +27,74 @@ window.onload = function () {
         velocityX = -1;
         velocityY = 0;
         break;
-   //up arrow 38
+      //up arrow 38
       case 38:
         velocityX = 0;
         velocityY = -1;
         break;
-    //arrow down 40
+      //arrow down 40
       case 40:
         velocityX = 0;
         velocityY = 1;
         break;
     }
   });
+
+  //controles para dispositivos móveis
+  canvas.addEventListener("touchstart", handleTouchStart, false);
+  canvas.addEventListener("touchmove", handleTouchMove, false);
+
+  var xDown = null;
+  var yDown = null;
+
+  function handleTouchStart(evt) {
+    const firstTouch = evt.touches[0];
+    xDown = firstTouch.clientX;
+    yDown = firstTouch.clientY;
+  }
+
+  function handleTouchMove(evt) {
+    if (!xDown || !yDown) {
+      return;
+    }
+
+    var xUp = evt.touches[0].clientX;
+    var yUp = evt.touches[0].clientY;
+
+    var xDiff = xDown - xUp;
+    var yDiff = yDown - yUp;
+
+    if (Math.abs(xDiff) > Math.abs(yDiff)) {
+      // horizontal movement
+      if (xDiff > 0) {
+        // swiped left
+        velocityX = -1;
+        velocityY = 0;
+      } else {
+        // swiped right
+        velocityX = 1;
+        velocityY = 0;
+      }
+    } else {
+      // vertical movement
+      if (yDiff > 0) {
+        // swiped up
+        velocityX = 0;
+        velocityY = -1;
+      } else {
+        // swiped down
+        velocityX = 0;
+        velocityY = 1;
+      }
+    }
+    /* reset values */
+    xDown = null;
+    yDown = null;
+  }
 };
 
 function jogo() {
-//screen configuration
+  //screen configuration
   ctx.fillStyle = "#2980b9";
 
   //horizontal edge distance, vertical edge distance, width, height
@@ -66,7 +118,7 @@ function jogo() {
     positionY = 0;
   }
 
- //configuring the snake
+  //configuring the snake
   ctx.fillStyle = "#00f102";
   for (let i = 0; i < snake.length; i++) {
     ctx.fillRect(snake[i].x * grid, snake[i].y * grid, grid - 1, grid - 1);
@@ -83,7 +135,7 @@ function jogo() {
     snake.shift();
   }
 
- //configuring the food
+  //configuring the food
   ctx.fillStyle = "#f1c40f";
   ctx.fillRect(foodX * grid, foodY * grid, grid - 1, grid - 1);
 
