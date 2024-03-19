@@ -11,6 +11,8 @@ window.onload = function () {
   velocityY = 0;
   grid = 20;
   size = 3;
+  pontos = 0; // variável para contar os pontos
+
   //game function call every 100 milliseconds
   setInterval(jogo, 100);
 
@@ -42,7 +44,7 @@ window.onload = function () {
 
   //controles para dispositivos móveis
   canvas.addEventListener("touchstart", handleTouchStart, false);
-  canvas.addEventListener("touchmove", handleTouchMove, false);
+  canvas.addEventListener("touchend", handleTouchEnd, false);
 
   var xDown = null;
   var yDown = null;
@@ -53,13 +55,13 @@ window.onload = function () {
     yDown = firstTouch.clientY;
   }
 
-  function handleTouchMove(evt) {
+  function handleTouchEnd(evt) {
     if (!xDown || !yDown) {
       return;
     }
 
-    var xUp = evt.touches[0].clientX;
-    var yUp = evt.touches[0].clientY;
+    var xUp = evt.changedTouches[0].clientX;
+    var yUp = evt.changedTouches[0].clientY;
 
     var xDiff = xDown - xUp;
     var yDiff = yDown - yUp;
@@ -142,7 +144,13 @@ function jogo() {
   //eating the food
   if (positionX == foodX && positionY == foodY) {
     size++;
+    pontos++; // aumenta os pontos
     foodX = Math.floor(Math.random() * grid);
     foodY = Math.floor(Math.random() * grid);
   }
+
+  // Exibe a pontuação na tela
+  ctx.fillStyle = "#fff";
+  ctx.font = "20px Arial";
+  ctx.fillText("Pontuação: " + pontos, 10, 30);
 }
