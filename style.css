@@ -18,3 +18,9 @@ canvas {
     margin: 10px;
     background-color: #333;
   }
+
+  h3{
+    color: #70C5CE;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+}
