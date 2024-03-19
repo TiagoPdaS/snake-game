@@ -44,54 +44,44 @@ window.onload = function () {
 
   //controles para dispositivos móveis
   canvas.addEventListener("touchstart", handleTouchStart, false);
-  canvas.addEventListener("touchend", handleTouchEnd, false);
-
-  var xDown = null;
-  var yDown = null;
 
   function handleTouchStart(evt) {
-    const firstTouch = evt.touches[0];
-    xDown = firstTouch.clientX;
-    yDown = firstTouch.clientY;
-  }
+    const touchX = evt.touches[0].clientX;
+    const touchY = evt.touches[0].clientY;
 
-  function handleTouchEnd(evt) {
-    if (!xDown || !yDown) {
-      return;
-    }
+    const canvasRect = canvas.getBoundingClientRect();
+    const canvasX = touchX - canvasRect.left;
+    const canvasY = touchY - canvasRect.top;
 
-    var xUp = evt.changedTouches[0].clientX;
-    var yUp = evt.changedTouches[0].clientY;
+    const centerX = canvas.width / 2;
+    const centerY = canvas.height / 2;
 
-    var xDiff = xDown - xUp;
-    var yDiff = yDown - yUp;
+    const diffX = canvasX - centerX;
+    const diffY = canvasY - centerY;
 
-    if (Math.abs(xDiff) > Math.abs(yDiff)) {
+    if (Math.abs(diffX) > Math.abs(diffY)) {
       // horizontal movement
-      if (xDiff > 0) {
-        // swiped left
-        velocityX = -1;
+      if (diffX > 0) {
+        // right
+        velocityX = 1;
         velocityY = 0;
       } else {
-        // swiped right
-        velocityX = 1;
+        // left
+        velocityX = -1;
         velocityY = 0;
       }
     } else {
       // vertical movement
-      if (yDiff > 0) {
-        // swiped up
-        velocityX = 0;
-        velocityY = -1;
-      } else {
-        // swiped down
+      if (diffY > 0) {
+        // down
         velocityX = 0;
         velocityY = 1;
+      } else {
+        // up
+        velocityX = 0;
+        velocityY = -1;
       }
     }
-    /* reset values */
-    xDown = null;
-    yDown = null;
   }
 };
 
