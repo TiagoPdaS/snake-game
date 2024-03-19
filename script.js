@@ -43,9 +43,9 @@ window.onload = function () {
   });
 
   //controlls for mobile
-  canvas.addEventListener("touchmove", handleTouchMove, false);
+  canvas.addEventListener("touchstart", handleTouchStart, false);
 
-  function handleTouchMove(evt) {
+  function handleTouchStart(evt) {
     evt.preventDefault();
     const touchX = evt.touches[0].clientX;
     const touchY = evt.touches[0].clientY;
@@ -151,8 +151,9 @@ function jogo() {
     foodY = Math.floor(Math.random() * grid);
   }
 
-  // Exibe a pontuação na tela
+  // show score
   ctx.fillStyle = "#fff";
   ctx.font = "20px Arial";
   ctx.fillText("Points: " + score, 10, 30);
 }
+
