@@ -44,34 +44,22 @@ window.onload = function () {
 
   // Controls for mobile
   if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+    const buttonSize = 40; // Size of each control button
+    const spacing = 20; // Spacing between control buttons
+
+    // Calculate positions of control buttons
+    const centerX = canvas.width / 2;
+    const centerY = canvas.height / 2;
+    const leftX = centerX - buttonSize - spacing;
+    const rightX = centerX + spacing;
+    const upY = centerY - buttonSize - spacing;
+    const downY = centerY + spacing;
+
     // Create control buttons
-    const upButton = document.createElement("button");
-    upButton.textContent = "▲";
-    upButton.onclick = function () {
-      velocityX = 0;
-      velocityY = -1;
-    };
-
-    const downButton = document.createElement("button");
-    downButton.textContent = "▼";
-    downButton.onclick = function () {
-      velocityX = 0;
-      velocityY = 1;
-    };
-
-    const leftButton = document.createElement("button");
-    leftButton.textContent = "◄";
-    leftButton.onclick = function () {
-      velocityX = -1;
-      velocityY = 0;
-    };
-
-    const rightButton = document.createElement("button");
-    rightButton.textContent = "►";
-    rightButton.onclick = function () {
-      velocityX = 1;
-      velocityY = 0;
-    };
+    const upButton = createControlButton(leftX + buttonSize, upY, "▲");
+    const downButton = createControlButton(leftX + buttonSize, downY, "▼");
+    const leftButton = createControlButton(leftX, centerY, "◄");
+    const rightButton = createControlButton(rightX, centerY, "►");
 
     // Add buttons to the document
     document.body.appendChild(upButton);
@@ -80,6 +68,43 @@ window.onload = function () {
     document.body.appendChild(rightButton);
   }
 };
+
+// Function to create a control button
+function createControlButton(x, y, text) {
+  const button = document.createElement("button");
+  button.textContent = text;
+  button.style.position = "absolute";
+  button.style.left = x + "px";
+  button.style.top = y + "px";
+  button.style.width = "40px"; // Adjust button size as needed
+  button.style.height = "40px";
+  button.onclick = function () {
+    handleButtonClick(text);
+  };
+  return button;
+}
+
+// Function to handle button click events
+function handleButtonClick(direction) {
+  switch (direction) {
+    case "▲":
+      velocityX = 0;
+      velocityY = -1;
+      break;
+    case "▼":
+      velocityX = 0;
+      velocityY = 1;
+      break;
+    case "◄":
+      velocityX = -1;
+      velocityY = 0;
+      break;
+    case "►":
+      velocityX = 1;
+      velocityY = 0;
+      break;
+  }
+}
 
 function jogo() {
   // Resets the snake's size and score when starting the match
