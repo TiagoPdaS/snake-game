@@ -11,12 +11,12 @@ window.onload = function () {
   velocityY = 0;
   grid = 20;
   size = 3;
-  score = 0; // variável para contar os pontos
+  score = 0; 
 
   //game function call every 100 milliseconds
   setInterval(jogo, 100);
 
-  //controles para desktop
+  //controlls for desktop
   document.addEventListener("keydown", function (e) {
     switch (e.keyCode) {
       //right arrow 39
@@ -42,7 +42,7 @@ window.onload = function () {
     }
   });
 
-  //controles para dispositivos móveis
+  //controlls for mobile
   canvas.addEventListener("touchstart", handleTouchStart, false);
 
   function handleTouchStart(evt) {
@@ -86,15 +86,15 @@ window.onload = function () {
 };
 
 function jogo() {
-  // Reinicia o tamanho da cobra e a pontuação ao iniciar a partida
+  // Resets the snake's size and score when starting the match
   if (snake.length === 0) {
     size = 3;
     score = 0;
   }
 
-  // Verifica se a cobra voltou ao tamanho inicial
+  // Check to see if the snake has returned to its initial size
   if (size === 3) {
-    score = 0; // Reinicia a pontuação quando a cobra volta ao tamanho inicial
+    score = 0; // Restarts scoring when the snake returns to its initial size
   }
 
   //screen configuration
@@ -145,7 +145,7 @@ function jogo() {
   //eating the food
   if (positionX == foodX && positionY == foodY) {
     size++;
-    score++; // aumenta os pontos
+    score++; //Increases points
     foodX = Math.floor(Math.random() * grid);
     foodY = Math.floor(Math.random() * grid);
   }
@@ -153,5 +153,5 @@ function jogo() {
   // Exibe a pontuação na tela
   ctx.fillStyle = "#fff";
   ctx.font = "20px Arial";
-  ctx.fillText("Pontuação: " + score, 10, 30);
+  ctx.fillText("Points: " + score, 10, 30);
 }
