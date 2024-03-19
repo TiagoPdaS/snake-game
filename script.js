@@ -42,31 +42,48 @@ window.onload = function () {
     }
   });
 
-  // Show controls only on mobile devices
-  if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-    document.getElementById("controls").style.display = "block";
-  }
-
   //controlls for mobile
-  document.getElementById("up-btn").addEventListener("click", function () {
-    velocityX = 0;
-    velocityY = -1;
-  });
+  canvas.addEventListener("touchmove", handleTouchMove, false);
 
-  document.getElementById("left-btn").addEventListener("click", function () {
-    velocityX = -1;
-    velocityY = 0;
-  });
+  function handleTouchMove(evt) {
+    evt.preventDefault();
+    const touchX = evt.touches[0].clientX;
+    const touchY = evt.touches[0].clientY;
 
-  document.getElementById("right-btn").addEventListener("click", function () {
-    velocityX = 1;
-    velocityY = 0;
-  });
+    const canvasRect = canvas.getBoundingClientRect();
+    const canvasX = touchX - canvasRect.left;
+    const canvasY = touchY - canvasRect.top;
 
-  document.getElementById("down-btn").addEventListener("click", function () {
-    velocityX = 0;
-    velocityY = 1;
-  });
+    const centerX = canvas.width / 2;
+    const centerY = canvas.height / 2;
+
+    const diffX = canvasX - centerX;
+    const diffY = canvasY - centerY;
+
+    if (Math.abs(diffX) > Math.abs(diffY)) {
+      // horizontal movement
+      if (diffX > 0) {
+        // right
+        velocityX = 1;
+        velocityY = 0;
+      } else {
+        // left
+        velocityX = -1;
+        velocityY = 0;
+      }
+    } else {
+      // vertical movement
+      if (diffY > 0) {
+        // down
+        velocityX = 0;
+        velocityY = 1;
+      } else {
+        // up
+        velocityX = 0;
+        velocityY = -1;
+      }
+    }
+  }
 };
 
 function jogo() {
