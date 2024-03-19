@@ -11,7 +11,7 @@ window.onload = function () {
   velocityY = 0;
   grid = 20;
   size = 3;
-  score = 0;
+  score = 0; 
 
   //game function call every 100 milliseconds
   setInterval(jogo, 100);
@@ -43,10 +43,9 @@ window.onload = function () {
   });
 
   //controlls for mobile
-  canvas.addEventListener("touchmove", handleTouchMove, false);
+  canvas.addEventListener("touchstart", handleTouchStart, false);
 
-  function handleTouchMove(evt) {
-    evt.preventDefault();
+  function handleTouchStart(evt) {
     const touchX = evt.touches[0].clientX;
     const touchY = evt.touches[0].clientY;
 
