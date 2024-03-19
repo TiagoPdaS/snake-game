@@ -1,22 +1,25 @@
-*{
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-body{
-
-  margin: 40px;
-  display: block;
-  align-items: center;
-  text-align: center;
-  overflow: hidden;
+body {
+  margin: 0;
+  display: flex;
+  justify-content: center; 
+  align-items: center; 
+  height: 100vh; 
+  overflow: hidden; 
 }
-  h3{
-    margin: 15px;
-    display: block;
-    align-items: center;
-    text-align: center;
-    justify-content: center;
-    color: #2980b9;
+
+h3 {
+  margin: 15px;
+  color: #2980b9;
+}
+
+@media (max-width: 768px) {
+  body {
+    margin: 10px; 
   }
+}
