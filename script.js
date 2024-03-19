@@ -43,32 +43,13 @@ window.onload = function () {
   });
 
   // Show controls only on mobile devices
-  if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-    document.getElementById("controls").style.display = "block";
+  // Detecta se o dispositivo é móvel
+  const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
+  if (isMobile) {
+    document.getElementById('controls').style.display = 'block'; // Exibe os controles apenas em dispositivos móveis
   }
-
-  //controlls for mobile
-  document.getElementById("up-btn").addEventListener("click", function () {
-    velocityX = 0;
-    velocityY = -1;
-  });
-
-  document.getElementById("left-btn").addEventListener("click", function () {
-    velocityX = -1;
-    velocityY = 0;
-  });
-
-  document.getElementById("right-btn").addEventListener("click", function () {
-    velocityX = 1;
-    velocityY = 0;
-  });
-
-  document.getElementById("down-btn").addEventListener("click", function () {
-    velocityX = 0;
-    velocityY = 1;
-  });
-};
-
+}
 function jogo() {
   // Resets the snake's size and score when starting the match
   if (snake.length === 0) {
