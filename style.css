@@ -10,3 +10,9 @@ body{
     justify-content: center;
     margin-top: 40px;
 }
+
+canvas {
+    display: block;
+    margin: auto;
+    background-color: #333;
+  }
